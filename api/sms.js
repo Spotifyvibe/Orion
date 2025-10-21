@@ -1,7 +1,9 @@
 export default async function (req, res) {
-  const params = new URLSearchParams(await req.text());
-  const body   = params.get('Body') || '';
-  const text   = body.trim().toUpperCase();
+  const buf = [];
+  for await (const chunk of req) buf.push(chunk);
+  const body = Buffer.concat(buf).toString();      // raw POST body
+  const params = new URLSearchParams(body);
+  const text = (params.get('Body') || '').trim().toUpperCase();
 
   let msg = '';
   if (text === 'DONE')        msg = '🔥 Streak +1!';
