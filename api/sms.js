@@ -1,4 +1,4 @@
-module.exports = (req, res) => {
+export default function (req, res) {
   res.setHeader('Content-Type', 'text/xml');
   res.send('<Response><Message>Bot alive</Message></Response>');
-};
+}
